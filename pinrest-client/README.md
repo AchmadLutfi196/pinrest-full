@@ -1,73 +1,113 @@
-# React + TypeScript + Vite
+# Pinrest Client (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Pinterest-like application frontend built with React, TypeScript, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework**: React 19 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS v4
+- **Routing**: React Router DOM v7
+- **HTTP Client**: Axios
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js >= 18.x
+- npm >= 9.x
+- Backend API running at `http://localhost:3000`
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Install dependencies
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Running the Application
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Development mode (with hot-reload)
+npm run dev
 ```
+
+The application will be available at: `http://localhost:5173`
+
+> **Note**: Make sure the backend API (`pinrest`) is running at `http://localhost:3000` before starting the frontend.
+
+## Available Scripts
+
+| Command           | Description              |
+| ----------------- | ------------------------ |
+| `npm run dev`     | Start development server |
+| `npm run build`   | Build for production     |
+| `npm run preview` | Preview production build |
+| `npm run lint`    | Run ESLint               |
+
+## Project Structure
+
+```
+pinrest-client/
+├── public/              # Static assets
+├── src/
+│   ├── assets/          # Images and other assets
+│   ├── components/      # Reusable components
+│   │   └── Layout/      # Layout components (Header, MainLayout)
+│   ├── context/         # React context providers
+│   │   └── AuthContext.tsx
+│   ├── pages/           # Page components
+│   │   ├── Home.tsx
+│   │   ├── Login.tsx
+│   │   ├── Register.tsx
+│   │   ├── CreatePin.tsx
+│   │   ├── PinDetail.tsx
+│   │   └── Profile.tsx
+│   ├── services/        # API service modules
+│   │   ├── api.ts       # Axios instance
+│   │   ├── authService.ts
+│   │   ├── pinService.ts
+│   │   ├── boardService.ts
+│   │   └── userService.ts
+│   ├── types/           # TypeScript type definitions
+│   ├── App.tsx          # Main application component
+│   ├── main.tsx         # Application entry point
+│   └── index.css        # Global styles
+├── index.html           # HTML template
+├── vite.config.ts       # Vite configuration
+├── tailwind.config.js   # Tailwind configuration
+└── package.json
+```
+
+## Features
+
+- 🔐 User authentication (Login/Register)
+- 🖼️ View and create pins
+- 📁 Organize pins into boards
+- 👤 User profiles
+- 🔍 Browse pins by category
+- 💾 Save pins to boards
+
+## Environment Configuration
+
+The API base URL is configured in `src/services/api.ts`. Update this if your backend runs on a different port:
+
+```typescript
+const api = axios.create({
+  baseURL: "http://localhost:3000", // Change if needed
+});
+```
+
+## Building for Production
+
+```bash
+# Build the application
+npm run build
+
+# Preview the production build
+npm run preview
+```
+
+The built files will be in the `dist/` directory.
+
+## License
+
+This project is private.
