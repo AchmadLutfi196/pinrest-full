@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  avatar    String?
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  boards    Board[]
+  pins      Pin[]
+  likes     Like[]
+  savedPins SavedPin[]
+}
+
+model Board {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  coverImage  String?
+  isPrivate   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  pins      Pin[]
+  savedPins SavedPin[]
+}
+
+model Pin {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  imageUrl    String
+  link        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  boardId Int?
+  board   Board? @relation(fields: [boardId], references: [id], onDelete: SetNull)
+
+  likes     Like[]
+  savedPins SavedPin[]
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  pinId Int
+  pin   Pin @relation(fields: [pinId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, pinId])
+}
+
+model SavedPin {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  pinId Int
+  pin   Pin @relation(fields: [pinId], references: [id], onDelete: Cascade)
+
+  boardId Int
+  board   Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, pinId, boardId])
+}

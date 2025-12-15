@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InspoShare - Web App Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec4899",
+                        "background-light": "#ffffff",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }.no-scrollbar {
+            -ms-overflow-style: none;scrollbar-width: none;}
+    </style>
+</head>
+<body class="bg-background-light font-display text-gray-900 min-h-screen flex flex-col transition-colors duration-200">
+<header class="sticky top-0 z-50 w-full bg-background-light/95 backdrop-blur-sm border-b border-gray-100">
+<div class="px-4 md:px-8 py-3 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3 shrink-0">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-4xl">dashboard</span>
+</div>
+<h2 class="hidden md:block text-lg font-bold tracking-tight text-gray-900">InspoShare</h2>
+</div>
+<div class="flex-1 max-w-2xl px-4">
+<div class="relative group w-full">
+<div class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 pointer-events-none">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full h-12 pl-12 pr-4 rounded-full bg-gray-100 border-none text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-primary focus:bg-white transition-all shadow-sm hover:bg-gray-200/50" placeholder="Search for inspiration..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2 md:gap-4 shrink-0">
+<nav class="hidden md:flex items-center gap-6 mr-2">
+<a class="text-gray-900 font-bold hover:text-primary transition-colors" href="#">Home</a>
+<a class="text-gray-500 font-medium hover:text-gray-900 transition-colors" href="#">Explore</a>
+<a class="text-gray-500 font-medium hover:text-gray-900 transition-colors" href="#">Create</a>
+</nav>
+<div class="flex items-center gap-3">
+<button class="hidden sm:flex size-10 items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hidden sm:flex size-10 items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<button class="size-10 rounded-full overflow-hidden border-2 border-transparent hover:border-primary transition-colors">
+<div class="w-full h-full bg-cover bg-center" data-alt="User profile avatar showing a smiling person" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADcULJTXVDOdUjXg-RMCwGoBsAqxujfuZX3rGMPMgMbbmJZmmaqbyWFSqnHJ3SBY5qIkUUX7m5Id1wIsGe6vmoj8CMxRcgpjDLS0deQ7JhAXl6pNgJ2U7LbHf3OZtFItyWxHBh1zcBQDFVjKMVbA7v2P1I3zomH_r9Jd3x90AbjmxwJ8KYFjz8zb9RixlnHU26QXrhvQ1MM9hTanzFtF7YcTxrNKznxgTkTkAZR6HYUCTus8rJtDJeSbdFBM-L06EruPLvyrXYLQ3u');"></div>
+</button>
+<button class="sm:hidden flex items-center justify-center size-10 text-gray-900">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full max-w-[1600px] mx-auto px-4 md:px-8 py-6">
+<div class="mb-8 w-full overflow-hidden">
+<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<button class="whitespace-nowrap flex h-10 px-6 items-center justify-center rounded-full bg-gray-900 text-white font-bold text-sm transition-transform active:scale-95 shadow-md">
+                For You
+            </button>
+<button class="whitespace-nowrap flex h-10 px-6 items-center justify-center rounded-full bg-gray-100 text-gray-900 font-medium text-sm hover:bg-gray-200 transition-colors">
+                Photography
+            </button>
+<button class="whitespace-nowrap flex h-10 px-6 items-center justify-center rounded-full bg-gray-100 text-gray-900 font-medium text-sm hover:bg-gray-200 transition-colors">
+                UI/UX Design
+            </button>
+<button class="whitespace-nowrap flex h-10 px-6 items-center justify-center rounded-full bg-gray-100 text-gray-900 font-medium text-sm hover:bg-gray-200 transition-colors">
+                Interior
+            </button>
+<button class="whitespace-nowrap flex h-10 px-6 items-center justify-center rounded-full bg-gray-100 text-gray-900 font-medium text-sm hover:bg-gray-200 transition-colors">
+                Nature
+            </button>
+<button class="whitespace-nowrap flex h-10 px-6 items-center justify-center rounded-full bg-gray-100 text-gray-900 font-medium text-sm hover:bg-gray-200 transition-colors">
+                Travel
+            </button>
+<button class="whitespace-nowrap flex h-10 px-6 items-center justify-center rounded-full bg-gray-100 text-gray-900 font-medium text-sm hover:bg-gray-200 transition-colors">
+                Typography
+            </button>
+<button class="whitespace-nowrap flex h-10 px-6 items-center justify-center rounded-full bg-gray-100 text-gray-900 font-medium text-sm hover:bg-gray-200 transition-colors">
+                Art
+            </button>
+</div>
+</div>
+<div class="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4">
+<div class="break-inside-avoid relative group mb-4">
+<div class="relative rounded-[1.5rem] overflow-hidden bg-gray-100">
+<img alt="Misty forest landscape in early morning light" class="w-full h-auto block object-cover transform transition-transform duration-500 group-hover:scale-105" data-alt="Misty forest landscape in early morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEsni_yObj-O-WKVNwJVQUn1imOQ_CFESERda54ZwrSB0Xsqn7uB4aBiDfYj1N_XyTJY6jXIzPKWceFeLerCgVVfgcsA4a3udexEaMqkD6RCpnSduWyPChMxtpBmu9FLQq_qz3OcERdiYuBCI6sGNlrc03a6khxRyCwFqmeO-4km7uuIYh35IkUP6m27dBsIUd5LHg5VuZGRUMDNhfrmHLd1JwihxDQfMyT9enlgPXo7lnrwYjBQSxcrMj3EaIpt5pIJfgqTzG1E0g"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
+<div class="flex justify-end">
+<button class="bg-primary text-white font-bold px-4 py-2 rounded-full text-sm hover:bg-primary/90 transition-colors shadow-lg">Save</button>
+</div>
+<div class="flex justify-end gap-2">
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-2 px-1">
+<h3 class="font-bold text-sm text-gray-900 truncate">Morning Mist</h3>
+<div class="flex items-center gap-2 mt-1">
+<div class="size-5 rounded-full bg-gray-200" data-alt="Small user avatar icon"></div>
+<p class="text-xs text-gray-500">@NatureLover</p>
+</div>
+</div>
+</div>
+<div class="break-inside-avoid relative group mb-4">
+<div class="relative rounded-[1.5rem] overflow-hidden bg-gray-100">
+<img alt="Abstract fluid shapes with vibrant colors" class="w-full h-auto block object-cover transform transition-transform duration-500 group-hover:scale-105" data-alt="Abstract fluid shapes with vibrant colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3kbOgdcp0ZGh8mMwcDLm1pLhcvLKBs6RaKvNW2jSo65hfp9Igpx-VJ8Hc4LiIjjF71ECCn5BAr1iIN33WALZB7j8knEK2C2Cl999_9Zr2gPALfyViuxGBjf5gXZedPH--iGbKRNX44YkKHGTLKygitvmSPlGXtNnbIi2dtkcaV0EBfrGOtG90SVcjkOhV4uRo2VxIr0pdC9tzGfNvwaNED0JsLuUh_M_AuSYtMk1ACDnNAwQ8lZTuGlrnhuTS2hqdqPznuu8gdqYA"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
+<div class="flex justify-end">
+<button class="bg-primary text-white font-bold px-4 py-2 rounded-full text-sm hover:bg-primary/90 transition-colors shadow-lg">Save</button>
+</div>
+<div class="flex justify-end gap-2">
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-2 px-1">
+<h3 class="font-bold text-sm text-gray-900 truncate">Fluid Shapes</h3>
+<div class="flex items-center gap-2 mt-1">
+<div class="size-5 rounded-full bg-gray-200" data-alt="Small user avatar icon"></div>
+<p class="text-xs text-gray-500">@DesignDaily</p>
+</div>
+</div>
+</div>
+<div class="break-inside-avoid relative group mb-4">
+<div class="relative rounded-[1.5rem] overflow-hidden bg-gray-100">
+<img alt="Modern minimal living room interior design" class="w-full h-auto block object-cover transform transition-transform duration-500 group-hover:scale-105" data-alt="Modern minimal living room interior design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlamUL2B0lXvph3q0W5b6vkuHvYqwfZbfc86xA9p47FOqrkIN41wPaKU8PktV9VAVcMc_CiilFMrkeMJI4BlDW1MKsMDwYZ1OGrDfZXxaVgJ-BBZ-ZfTuwyyeOxlLysc_k1kqJPMsbaCSkJONAC9rfSDEN3BrWQoAnSsN0EYmQ3L9olH5NCG240EgM-Q05h24FsnpeOg-HImayLiFjvzfgtspoNTZmQyxZyOVXnxKvLaVOWlMjiTOK-MhpTdT5TnssrpmC4sxxvi3J"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
+<div class="flex justify-end">
+<button class="bg-primary text-white font-bold px-4 py-2 rounded-full text-sm hover:bg-primary/90 transition-colors shadow-lg">Save</button>
+</div>
+<div class="flex justify-end gap-2">
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-2 px-1">
+<h3 class="font-bold text-sm text-gray-900 truncate">Cozy Corner</h3>
+<div class="flex items-center gap-2 mt-1">
+<div class="size-5 rounded-full bg-gray-200" data-alt="Small user avatar icon"></div>
+<p class="text-xs text-gray-500">@HomeDecor</p>
+</div>
+</div>
+</div>
+<div class="break-inside-avoid relative group mb-4">
+<div class="relative rounded-[1.5rem] overflow-hidden bg-gray-100">
+<img alt="Snow capped mountain peak at sunset" class="w-full h-auto block object-cover transform transition-transform duration-500 group-hover:scale-105" data-alt="Snow capped mountain peak at sunset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_mO1Mbur4nXBLbM5ancf0KDPLNQUbdR6CdjMxqfSCBCeaVEd7ZLJN7B6N_zGUXofSgHBm-cDje78FcZ5SzmnMaluMmhQuZXhThN8sLsycarkOnh74ev4YP4ddJqm2jqf0Is64LZyNI5ExDMsuDAf1mvT2fMd6-1v3idv0h01ihZGn9PFAZtYpKtxVTrypPRMJ_7v8gua5HC6ivis2dgSe00DaDfTEsvUytRvVfxo1PWcqLk7WqXQn-AJaPveDAtUWd_WFrz7nqnxy"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
+<div class="flex justify-end">
+<button class="bg-primary text-white font-bold px-4 py-2 rounded-full text-sm hover:bg-primary/90 transition-colors shadow-lg">Save</button>
+</div>
+<div class="flex justify-end gap-2">
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-2 px-1">
+<h3 class="font-bold text-sm text-gray-900 truncate">Alpine Glow</h3>
+<div class="flex items-center gap-2 mt-1">
+<div class="size-5 rounded-full bg-gray-200" data-alt="Small user avatar icon"></div>
+<p class="text-xs text-gray-500">@MountainHigh</p>
+</div>
+</div>
+</div>
+<div class="break-inside-avoid relative group mb-4">
+<div class="relative rounded-[1.5rem] overflow-hidden bg-gray-100">
+<img alt="Top down view of latte art coffee" class="w-full h-auto block object-cover transform transition-transform duration-500 group-hover:scale-105" data-alt="Top down view of latte art coffee" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8Dow6ai0ORqUeTsBrJEn9Q_dH1RR3KzkpnkBrpolSPJWmJ8t5ykKl1aHUKeXIseX7YmwBvCvqx0V6IopaRBGJ8BmLKnEFiN-DqiQmI55sIxdt1Gs7VyGmh8L3YG8MJotLozSZEKIs6LAWlTRcTQNzC8juyz69P8SziZxe9BdQcPGn3NKZuzOIv5qsMfOFa4UXmBJTjBOnBoQgVOLwMlbvgJCDlidSUyLEMs3UAKNrYK-snl9AnwfgAmKmQgXokE4wDQ7gDRfDeHQx"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
+<div class="flex justify-end">
+<button class="bg-primary text-white font-bold px-4 py-2 rounded-full text-sm hover:bg-primary/90 transition-colors shadow-lg">Save</button>
+</div>
+<div class="flex justify-end gap-2">
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-2 px-1">
+<h3 class="font-bold text-sm text-gray-900 truncate">Morning Fuel</h3>
+<div class="flex items-center gap-2 mt-1">
+<div class="size-5 rounded-full bg-gray-200" data-alt="Small user avatar icon"></div>
+<p class="text-xs text-gray-500">@BaristaLife</p>
+</div>
+</div>
+</div>
+<div class="break-inside-avoid relative group mb-4">
+<div class="relative rounded-[1.5rem] overflow-hidden bg-gray-100">
+<img alt="City lights bokeh at night" class="w-full h-auto block object-cover transform transition-transform duration-500 group-hover:scale-105" data-alt="City lights bokeh at night" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm1aOift_4j6Nk5rfyknYzVw9loWHbItCF_Xud2tWKAwTLqukDQa0526PRI6bvUhgnyeub3v81uzTPDScroMYLXjMFSFH3hKABdTMVX8AbDAw2TkLwvGuwnwYh2ZhG6RwssNR9WKEGQLPP4z_8hQ136ZdJ_KUo0hR9FZEk4xFrKzHfWbGphT769WG-dHNQWKMDbG1r6ZmrismOdbmTDpSOOPjP9u2XSVWgQxI4rJU5mkzhffodEOSmq6K3QPUQ6Y75Trp66f9IVknC"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
+<div class="flex justify-end">
+<button class="bg-primary text-white font-bold px-4 py-2 rounded-full text-sm hover:bg-primary/90 transition-colors shadow-lg">Save</button>
+</div>
+<div class="flex justify-end gap-2">
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-2 px-1">
+<h3 class="font-bold text-sm text-gray-900 truncate">Urban Vibes</h3>
+<div class="flex items-center gap-2 mt-1">
+<div class="size-5 rounded-full bg-gray-200" data-alt="Small user avatar icon"></div>
+<p class="text-xs text-gray-500">@CityWalker</p>
+</div>
+</div>
+</div>
+<div class="break-inside-avoid relative group mb-4">
+<div class="relative rounded-[1.5rem] overflow-hidden bg-gray-100">
+<img alt="Clean desk setup with laptop and plant" class="w-full h-auto block object-cover transform transition-transform duration-500 group-hover:scale-105" data-alt="Clean desk setup with laptop and plant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBz-ZWQ4S5cHjQh5s_i_5M-c8CAQ9gwPt35IsIpw4JY8--iAxcPPTgkLh3q1RodaMTWXME4lfraXrAOOjUtbeQXlM6mV47t9rLufogr84mf93jP3Rm0Fv1j3G1LoI477L7swJmsjYBMZrq-car53IwKai5Rt70e9Rgwu2jfn4erO4HsgopqYbeRHksA7PVe6-6UVfouUIxJ_H-84mwPmSvqsveKE365xoKaaXEx3flfdb6cIAcq9tqOt9PoTrllUot8-2cqJ5dYYckl"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
+<div class="flex justify-end">
+<button class="bg-primary text-white font-bold px-4 py-2 rounded-full text-sm hover:bg-primary/90 transition-colors shadow-lg">Save</button>
+</div>
+<div class="flex justify-end gap-2">
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-2 px-1">
+<h3 class="font-bold text-sm text-gray-900 truncate">Workspace Goals</h3>
+<div class="flex items-center gap-2 mt-1">
+<div class="size-5 rounded-full bg-gray-200" data-alt="Small user avatar icon"></div>
+<p class="text-xs text-gray-500">@TechMinimalist</p>
+</div>
+</div>
+</div>
+<div class="break-inside-avoid relative group mb-4">
+<div class="relative rounded-[1.5rem] overflow-hidden bg-gray-100">
+<img alt="Healthy avocado toast on a plate" class="w-full h-auto block object-cover transform transition-transform duration-500 group-hover:scale-105" data-alt="Healthy avocado toast on a plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRaYEr6xwjZURNCGeHQ-ctFt4tV3GcGCJd4vU4_3FY_iA2IIXZqAGptsTxlZpRFW1aPh-1H4wveMWtKYfb9C8FxcAmkqVNxMdB450SrKi4cHWlb0UU4VZNLJaElIioi-4s8NaQBUTXbXdRqVBURrQXaf3pYxdXKU9F1k7eULnrFq_-w6gUSOVF2ozwpeLtr0AGHmookba7gneU_XYfmZGIym1ivqqU4xDfGSQap0Eg2kSid_nGcBh8MSrqHet_t2lkTjw3QYshXqPk"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-between">
+<div class="flex justify-end">
+<button class="bg-primary text-white font-bold px-4 py-2 rounded-full text-sm hover:bg-primary/90 transition-colors shadow-lg">Save</button>
+</div>
+<div class="flex justify-end gap-2">
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="bg-white/90 text-gray-900 p-2 rounded-full hover:bg-white transition-colors size-8 flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-2 px-1">
+<h3 class="font-bold text-sm text-gray-900 truncate">Brunch Time</h3>
+<div class="flex items-center gap-2 mt-1">
+<div class="size-5 rounded-full bg-gray-200" data-alt="Small user avatar icon"></div>
+<p class="text-xs text-gray-500">@Foodie101</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-center mt-12 mb-8">
+<div class="flex items-center gap-2 bg-gray-100 rounded-full p-2 shadow-sm">
+<button class="size-10 flex items-center justify-center rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-full bg-primary text-white font-bold shadow-md">1</button>
+<button class="size-10 flex items-center justify-center rounded-full text-gray-600 hover:bg-gray-200 transition-colors">2</button>
+<button class="size-10 flex items-center justify-center rounded-full text-gray-600 hover:bg-gray-200 transition-colors">3</button>
+<span class="px-2 text-gray-400">...</span>
+<button class="size-10 flex items-center justify-center rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+<div class="fixed bottom-8 right-8 z-50">
+<button class="flex items-center justify-center size-14 rounded-full bg-primary text-white shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all active:scale-95">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+
+</body></html>
