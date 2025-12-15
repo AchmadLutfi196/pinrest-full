@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -15,8 +15,8 @@ model User {
   email     String   @unique
   username  String   @unique
   password  String
-  avatar    String?
-  bio       String?
+  avatar    String?  @db.Text
+  bio       String?  @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -29,8 +29,8 @@ model User {
 model Board {
   id          Int      @id @default(autoincrement())
   title       String
-  description String?
-  coverImage  String?
+  description String?  @db.Text
+  coverImage  String?  @db.Text
   isPrivate   Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -45,9 +45,9 @@ model Board {
 model Pin {
   id          Int      @id @default(autoincrement())
   title       String
-  description String?
-  imageUrl    String
-  link        String?
+  description String?  @db.Text
+  imageUrl    String   @db.Text
+  link        String?  @db.Text
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
