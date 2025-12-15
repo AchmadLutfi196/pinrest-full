@@ -1,14 +1,21 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import type { Pin } from '../types';
 import { pinService } from '../services';
+import { useAuth } from '../context/AuthContext';
 
 export function PinDetail() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [pin, setPin] = useState<Pin | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [isLiked, setIsLiked] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+  const isOwner = user && pin && user.id === pin.userId;
 
   useEffect(() => {
     if (id) {
@@ -41,6 +48,21 @@ export function PinDetail() {
     }
   };
 
+  const handleDelete = async () => {
+    if (!pin) return;
+    setIsDeleting(true);
+    try {
+      await pinService.delete(pin.id);
+      navigate('/', { replace: true });
+    } catch (err) {
+      console.error('Failed to delete pin:', err);
+      alert('Failed to delete pin');
+    } finally {
+      setIsDeleting(false);
+      setShowDeleteConfirm(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center py-16">
@@ -63,6 +85,41 @@ export function PinDetail() {
 
   return (
     <div className="max-w-6xl mx-auto py-8">
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 max-w-md mx-4 shadow-2xl">
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Delete Pin?</h3>
+            <p className="text-gray-600 mb-6">
+              This action cannot be undone. Are you sure you want to delete this pin?
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                className="px-5 py-2.5 rounded-full font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+                disabled={isDeleting}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-5 py-2.5 rounded-full font-bold text-white bg-red-500 hover:bg-red-600 transition-colors flex items-center gap-2"
+                disabled={isDeleting}
+              >
+                {isDeleting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Deleting...
+                  </>
+                ) : (
+                  'Delete'
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
         <div className="flex flex-col lg:flex-row">
           {/* Image */}
@@ -94,9 +151,26 @@ export function PinDetail() {
                 <button className="size-12 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition-colors">
                   <span className="material-symbols-outlined">share</span>
                 </button>
-                <button className="size-12 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition-colors">
-                  <span className="material-symbols-outlined">more_horiz</span>
-                </button>
+                
+                {/* Edit/Delete buttons for owner */}
+                {isOwner && (
+                  <>
+                    <Link
+                      to={`/pin/${pin.id}/edit`}
+                      className="size-12 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 flex items-center justify-center transition-colors"
+                      title="Edit Pin"
+                    >
+                      <span className="material-symbols-outlined">edit</span>
+                    </Link>
+                    <button
+                      onClick={() => setShowDeleteConfirm(true)}
+                      className="size-12 rounded-full bg-red-100 text-red-600 hover:bg-red-200 flex items-center justify-center transition-colors"
+                      title="Delete Pin"
+                    >
+                      <span className="material-symbols-outlined">delete</span>
+                    </button>
+                  </>
+                )}
               </div>
               <button className="h-12 px-6 bg-primary text-white font-bold rounded-full hover:bg-primary-hover transition-colors shadow-lg shadow-primary/30">
                 Save

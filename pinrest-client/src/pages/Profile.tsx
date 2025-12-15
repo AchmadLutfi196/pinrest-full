@@ -1,16 +1,21 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import type { User, Pin, Board } from '../types';
-import { userService } from '../services';
-import PinCard from '../components/PinCard';
+import { userService, pinService } from '../services';
+import { useAuth } from '../context/AuthContext';
 
 export function Profile() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { user: currentUser } = useAuth();
   const [user, setUser] = useState<User | null>(null);
   const [pins, setPins] = useState<Pin[]>([]);
   const [boards, setBoards] = useState<Board[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'pins' | 'boards'>('pins');
+  const [deletingPinId, setDeletingPinId] = useState<number | null>(null);
+
+  const isOwnProfile = currentUser && user && currentUser.id === user.id;
 
   useEffect(() => {
     if (id) {
@@ -33,6 +38,21 @@ export function Profile() {
       console.error('Failed to fetch profile:', err);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDeletePin = async (pinId: number) => {
+    if (!confirm('Are you sure you want to delete this pin?')) return;
+    
+    setDeletingPinId(pinId);
+    try {
+      await pinService.delete(pinId);
+      setPins(pins.filter(p => p.id !== pinId));
+    } catch (err) {
+      console.error('Failed to delete pin:', err);
+      alert('Failed to delete pin');
+    } finally {
+      setDeletingPinId(null);
     }
   };
 
@@ -69,7 +89,14 @@ export function Profile() {
             </div>
           )}
         </div>
-        <h1 className="text-3xl font-black text-gray-900 mb-2">{user.username}</h1>
+        <h1 className="text-3xl font-black text-gray-900 mb-2">
+          {user.username}
+          {isOwnProfile && (
+            <span className="ml-2 text-sm font-normal px-3 py-1 bg-primary/10 text-primary rounded-full">
+              My Profile
+            </span>
+          )}
+        </h1>
         {user.bio && <p className="text-gray-600 max-w-md mx-auto mb-4">{user.bio}</p>}
         <p className="text-sm text-gray-500">{user.email}</p>
 
@@ -122,13 +149,65 @@ export function Profile() {
           {pins.length > 0 ? (
             <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
               {pins.map((pin) => (
-                <PinCard key={pin.id} pin={pin} />
+                <div key={pin.id} className="break-inside-avoid group relative">
+                  <Link to={`/pin/${pin.id}`}>
+                    <div className="relative rounded-2xl overflow-hidden bg-gray-100">
+                      <img
+                        src={pin.imageUrl}
+                        alt={pin.title}
+                        className="w-full object-cover"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+                    </div>
+                  </Link>
+                  
+                  {/* Edit/Delete buttons for own pins */}
+                  {isOwnProfile && (
+                    <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Link
+                        to={`/pin/${pin.id}/edit`}
+                        className="size-8 rounded-full bg-white/90 backdrop-blur text-gray-700 hover:bg-white flex items-center justify-center shadow-lg"
+                        title="Edit"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <span className="material-symbols-outlined text-lg">edit</span>
+                      </Link>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleDeletePin(pin.id);
+                        }}
+                        disabled={deletingPinId === pin.id}
+                        className="size-8 rounded-full bg-white/90 backdrop-blur text-red-600 hover:bg-white flex items-center justify-center shadow-lg disabled:opacity-50"
+                        title="Delete"
+                      >
+                        {deletingPinId === pin.id ? (
+                          <div className="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                          <span className="material-symbols-outlined text-lg">delete</span>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                  
+                  <p className="mt-2 font-medium text-gray-900 line-clamp-2">{pin.title}</p>
+                </div>
               ))}
             </div>
           ) : (
             <div className="text-center py-12">
               <span className="material-symbols-outlined text-5xl text-gray-300 mb-4">image</span>
               <p className="text-gray-500">No pins yet</p>
+              {isOwnProfile && (
+                <Link
+                  to="/create"
+                  className="inline-block mt-4 px-6 py-2 bg-primary text-white font-bold rounded-full hover:bg-primary-hover transition-colors"
+                >
+                  Create your first pin
+                </Link>
+              )}
             </div>
           )}
         </>
